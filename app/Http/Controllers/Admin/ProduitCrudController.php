@@ -29,7 +29,64 @@ class ProduitCrudController extends CrudController
     protected function setupListOperation()
     {
         // TODO: remove setFromDb() and manually define Columns, maybe Filters
-        $this->crud->setFromDb();
+        //$this->crud->setFromDb();
+        $this->crud->setColumns([
+          [
+            'name' => "imge",
+            'label' => "image",
+            'type' => 'image',
+            'upload' => true,
+            'crop' => true, // set to true to allow cropping, false to disable
+            'aspect_ratio' => 1,
+            'height' => '80px',
+            'width' => '80px'
+          ],
+          [
+            'name' => 'nom',
+            'label' => 'Nom produit ',
+            'type' => 'text'
+          ],
+          [  // Select
+ 
+            'label' => "Category",
+            'type' => 'select',
+            'name' => 'category_id', // the db column for the foreign key
+            'entity' => 'category', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => "App\Models\Categorie",
+          ],
+          [    // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "Element de Base ",
+            'type'      => 'select2_multiple',
+            'name'      => 'element', // the method that defines the relationship in your Model
+            'entity'    => 'element', // the method that defines the relationship in your Model
+            'attribute' => 'nomelem', // foreign key attribute that is shown to user
+            'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+            'model'     => "App\Models\Element", // foreign key model
+            'options'   => (function ($query) {
+                return $query->orderBy('nomelem', 'ASC')->get(); }), 
+          ],
+         [
+            'name' => 'prix',
+            'label' => 'Prix  ',
+            'type' => 'number'
+         ],
+         [
+            'name' => 'remise',
+            'label' => 'Remise  ',
+            'type' => 'number'
+         ],
+         [
+            'name' => 'date_debut',
+            'label' => 'Date debut  ',
+            'type' => 'date'
+         ],
+         [
+            'name' => 'date_fin',
+            'label' => 'Date fin  ',
+            'type' => 'datetime'
+          ]
+        ]);
     }
 
     protected function setupCreateOperation()
@@ -38,7 +95,16 @@ class ProduitCrudController extends CrudController
 
         // TODO: remove setFromDb() and manually define Fields
         // $this->crud->setFromDb();
-   
+        $this->crud->addField([
+          'name' => "imge",
+          'label' => "image",
+          'type' => 'image',
+          'upload' => true,
+          'crop' => true, // set to true to allow cropping, false to disable
+          'aspect_ratio' => 1,
+          'height' => '80px',
+          'width' => '80px'
+    ]);
         $this->crud->addField([
             'name' => 'nom',
             'label' => 'Nom produit ',
@@ -53,6 +119,19 @@ class ProduitCrudController extends CrudController
             'attribute' => 'name', // foreign key attribute that is shown to user
             'model' => "App\Models\Categorie",
    ]);
+          $this->crud->addField([    // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "Element de Base ",
+            'type'      => 'select2_multiple',
+            'name'      => 'element', // the method that defines the relationship in your Model
+            'entity'    => 'element', // the method that defines the relationship in your Model
+            'attribute' => 'nomelem', // foreign key attribute that is shown to user
+            'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+             /*      'model'     => "App\Models\Element", // foreign key model
+                'options'   => (function ($query) {
+                    return $query->orderBy('nomelem', 'ASC')->get();
+                }), // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+           */
+          ]);
         $this->crud->addField([
             'name' => 'prix',
             'label' => 'Prix  ',

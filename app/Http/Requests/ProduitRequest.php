@@ -26,7 +26,10 @@ class ProduitRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'nom' => 'required',
+            'prix' => 'required',
+            'date_debut' => 'before:date_fin',
+            'date_fin' => 'after:date_debut'
         ];
     }
 
@@ -50,7 +53,12 @@ class ProduitRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'nom.require' => 'le nom est Obligatoire',
+            //'nom.unique' => 'le nom est déjà utilisé',
+            'date_fin.after' => 'la date fin doit être après date debut',
+           'prix.required' => 'le prix est Obligatoire',
+           // 'date_debut.required' => 'la date debut est Obligatoire',
+            'date_debut.before' => 'la date début doit être avant date fin'
         ];
     }
 }

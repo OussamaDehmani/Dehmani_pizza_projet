@@ -26,7 +26,7 @@ class CategorieRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+                
         ];
     }
 
@@ -50,7 +50,7 @@ class CategorieRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            
         ];
     }
 }

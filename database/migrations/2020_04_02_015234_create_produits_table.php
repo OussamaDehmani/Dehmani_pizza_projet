@@ -13,7 +13,8 @@ class CreateProduitsTable extends Migration
     public function up()
     {
         Schema::create('produits', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
+            $table->LONGTEXT('imge');
             $table->string('nom')->nullable();
             $table->decimal('prix')->nullable();
             $table->integer('remise')->default(0);
@@ -21,6 +22,7 @@ class CreateProduitsTable extends Migration
             $table->date('date_fin')->nullable();
             $table->unsignedInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+           
             $table->timestamps();
         });
     }
