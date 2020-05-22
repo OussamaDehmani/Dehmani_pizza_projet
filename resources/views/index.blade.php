@@ -93,7 +93,7 @@
         <div class="header__top">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-3 col-md-3">
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fas fa-pizza-slice"></i> Boite/Pizza</li>
@@ -101,7 +101,15 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-6 ">
+                        @if(session('succes'))
+                        <div class="alert alert-success text-center">
+                            {{session('succes')}}
+                        
+                        </div>
+                        @endif
+                    </div>
+                    <div class="col-lg-3 col-md-3">
                         <div class="header__top__right">
                           <!--  <div class="header__top__right__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -147,7 +155,7 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span></span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
+                            <li><a href="{{route('cart.index')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::count()}}</span></a></li>
                         </ul>
                        <!-- <div class="header__cart__price">item: <span>$150.00</span></div>-->
                     </div>
@@ -273,15 +281,17 @@
             <div class="row featured__filter">
                 @foreach($produit as $i)
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat {{$i->name}}">
-                    <div class="product__discount__item">
-                        <div class=" product__discount__item__pic set-bg" data-setbg="{{$i->imge}}">
+                    <div class="featured__item product__discount__item">
+                        <div class="featured__item__pic product__discount__item__pic set-bg" data-setbg="{{$i->imge}}">
                             @if(($i->remise)>0)
-                        <div class="product__discount__percent">{{$i->remise}}%</div>   
+                            <div class=" product__discount__percent">{{$i->remise}}%</div>   
                             @endif
-                        <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            <ul class="featured__item__pic__hover">
+                                <form action="{{route('cart.store')}}" method="POST" >
+                                 @csrf  
+                                 <input type="hidden" name="id" value="{{$i->id}}">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart"></i></button>
+                                </form>
                             </ul>
                         </div>
                         <div class="featured__item__text">
