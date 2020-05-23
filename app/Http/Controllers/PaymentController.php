@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Produit;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
-
-
-class CartController extends Controller
+use Illuminate\support\Arr;
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,16 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('shoping-cart');
+        \Stripe\Stripe::setApiKey('sk_test_xgcJI1CGhEmiuuhRUWnUD8df00rJEBjqxy');
+//dd( round(Cart::total()));
+        $intent = \Stripe\PaymentIntent::create([
+        'amount' => round(Cart::total()),
+        'currency' => 'usd',
+        // Verify your integration in this guide by including this parameter
+        'metadata' => ['integration_check' => 'accept_a_payment'],
+        ]);
+        $cle=Arr::get($intent,'client_secret');
+        return view('payment',['clientsecret'=>$cle]);
     }
 
     /**
@@ -35,20 +42,8 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-       /*$already=Cart::search(function ($cartItem, $rowId)use($request) {
-        return $cartItem->id === $request->id;
-        });
-
-        if($already->idEmpty()){
-        return redirect()->route('index')->with('succes','le produit déja éxiste dans le panier.');
-
-        }*/
-
-       $prod= Produit::find($request->id);
-       //dd($prod);
-        Cart::add($prod->id,$prod->nom,1,$prod->prix)->associate('App\Produit');
-        return redirect()->route('index')->with('succes','le produit est ajouté avec succes.');
+    {
+        //
     }
 
     /**
@@ -93,8 +88,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        Cart::remove($id);
-        return back()->with('succes','le produit a été supprimé avec succes.');
-
+        //
     }
 }

@@ -295,7 +295,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#">{{$i->nom}}</a></h6>
+                            <h6><a href="{{route('detail.show',$i->id)}}">{{$i->nom}}</a></h6>
                             <h5>{{$i->prix}}$</h5>
                         </div>
                     </div>

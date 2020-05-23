@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Produit;
+
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
-
-
-class CartController extends Controller
+use App\Models\Produit;
+class DetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('shoping-cart');
+       
     }
 
     /**
@@ -35,20 +33,8 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-       /*$already=Cart::search(function ($cartItem, $rowId)use($request) {
-        return $cartItem->id === $request->id;
-        });
-
-        if($already->idEmpty()){
-        return redirect()->route('index')->with('succes','le produit déja éxiste dans le panier.');
-
-        }*/
-
-       $prod= Produit::find($request->id);
-       //dd($prod);
-        Cart::add($prod->id,$prod->nom,1,$prod->prix)->associate('App\Produit');
-        return redirect()->route('index')->with('succes','le produit est ajouté avec succes.');
+    {
+        //
     }
 
     /**
@@ -59,7 +45,27 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
+       
+       //dd('hello');
+        $prod=Produit::where('id',$id)->first();
+        
+        $produit=\DB::table('produits')
+        ->join('categories','produits.category_id','=','categories.id',)
+        ->join('element_produit','element_produit.produit_id','=','produits.id',)
+        ->join('elements','element_produit.element_id','=','elements.id',)
+        ->where('produits.id',$id)
+        ->select('produits.id','produits.*','categories.*','elements.*' )
+        ->get();
+        
+        $categorie=\DB::table('produits')
+        ->where('produits.category_id',$prod->category_id)
+        ->select('produits.*')->get();
+
+       // $related=Produit::where('category_id',$prod->category_id);
+      // dd($categorie);
+     
+
+        return view('shop-details',['categorie'=>$categorie])->with('produit',$produit)->with('id',$id);
     }
 
     /**
@@ -93,8 +99,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        Cart::remove($id);
-        return back()->with('succes','le produit a été supprimé avec succes.');
-
+        //
     }
 }

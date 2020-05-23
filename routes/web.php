@@ -18,9 +18,18 @@ Route::get('/card', function () {
 });
 */
 Route::get('/', 'indexpage@lister')->name('index');
+
+/* panier */
 Route::get('/panier', 'CartController@index')->name('cart.index');
 Route::get('/panier/{id}','CartController@destroy')->name('cart.destroy');
 Route::POST('/panier/add','CartController@store')->name('cart.store');
+
+/* payment */
+Route::get('/payment','PaymentController@index')->name('payment.index');
+
+/*details */
+Route::get('/detail/{id}','DetailController@show')->name('detail.show');
+
 
 Route::get('/free', function () {
     Cart::destroy();
