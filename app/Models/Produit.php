@@ -14,7 +14,7 @@ class Produit extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-
+   
     protected $table = 'produits';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
@@ -28,6 +28,21 @@ class Produit extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    
+    public function getSlugWithLink() {
+         $tab=[];
+         $ax= Produit::with('produit')->get();
+         foreach($ax as $a){
+             foreach($a->element as $b){
+            array_push($tab,$b->nomelem);
+            }  
+        }
+         $x=implode(",", $tab);
+        return $x;
+    }
+
+
+
     public function category()
     {
         return $this->belongsTo(Categorie::class);
@@ -43,6 +58,10 @@ class Produit extends Model
     public function commande()
     {
         return $this->belongsToMany(Commande::class);
+    }
+    public function formule()
+    {
+        return $this->belongsToMany(Formule::class);
     }
     /*
     |--------------------------------------------------------------------------

@@ -65,6 +65,10 @@ class Formule extends Model
     {
         return $this->belongsToMany(Commande::class);
     }
+    public function produit()
+    {
+        return $this->belongsToMany(Produit::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

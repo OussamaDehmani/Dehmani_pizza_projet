@@ -37,43 +37,31 @@ class CommandeCrudController extends CrudController
               'type' => 'text'
             ],
                  [    // Select2Multiple = n-n relationship (with pivot table)
-                'label'     => "Produit ",
-                'type'      => 'select2_multiple',
-                'name'      => 'produit', // the method that defines the relationship in your Model
-                'entity'    => 'produit', // the method that defines the relationship in your Model
-                'attribute' => 'nom', // foreign key attribute that is shown to user
-                'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-                      'model'     => "App\Models\Produit", // foreign key model
-                    'options'   => (function ($query) {
-                        return $query->orderBy('nom', 'ASC')->get();
-                    }), // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
-               
+                  'label'     => "Product",
+                  'name' => "url",
+                  'type' => "model_function",
+                  'function_name' => 'product', // the method in your Model
+                  // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+                  //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+                     
                 ],
               [    // Select2Multiple = n-n relationship (with pivot table)
-                    'label'     => "Suplementaire ",
-                    'type'      => 'select2_multiple',
-                    'name'      => 'suplement', // the method that defines the relationship in your Model
-                    'entity'    => 'suplement', // the method that defines the relationship in your Model
-                    'attribute' => 'nomingred', // foreign key attribute that is shown to user
-                    'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-                           'model'     => "App\Models\Suplement", // foreign key model
-                        'options'   => (function ($query) {
-                            return $query->orderBy('nomingred', 'ASC')->get();
-                        }), // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+                'label'     => "suplementaires",
+                'name' => "url",
+                'type' => "model_function",
+                'function_name' => 'suplementaire', // the method in your Model
+                // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+                //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
                    
                     ],
                     [    // Select2Multiple = n-n relationship (with pivot table)
-                        'label'     => "formule ",
-                        'type'      => 'select2_multiple',
-                        'name'      => 'formule', // the method that defines the relationship in your Model
-                        'entity'    => 'formule', // the method that defines the relationship in your Model
-                        'attribute' => 'nomFormule', // foreign key attribute that is shown to user
-                        'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-                              'model'     => "App\Models\Element", // foreign key model
-                            'options'   => (function ($query) {
-                                return $query->orderBy('nomeFormule', 'ASC')->get();
-                            }), // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
-                       
+                      'label'     => "formules",
+                      'name' => "url",
+                      'type' => "model_function",
+                      'function_name' => 'form', // the method in your Model
+                      // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+                      //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+                         
                         ],
             [
               'name' => 'type',
@@ -114,7 +102,7 @@ class CommandeCrudController extends CrudController
           ]
     );
     $this->crud->addField([    // Select2Multiple = n-n relationship (with pivot table)
-        'label'     => "Produit ",
+        'label'     => 'Produit',
         'type'      => 'select2_multiple',
         'name'      => 'produit', // the method that defines the relationship in your Model
         'entity'    => 'produit', // the method that defines the relationship in your Model
@@ -127,7 +115,7 @@ class CommandeCrudController extends CrudController
        */
       ]);
       $this->crud->addField([    // Select2Multiple = n-n relationship (with pivot table)
-        'label'     => "formule ",
+        'label'     => 'formule',
         'type'      => 'select2_multiple',
         'name'      => 'formule', // the method that defines the relationship in your Model
         'entity'    => 'formule', // the method that defines the relationship in your Model
@@ -136,7 +124,7 @@ class CommandeCrudController extends CrudController
          
       ]);
     $this->crud->addField([    // Select2Multiple = n-n relationship (with pivot table)
-        'label'     => "Suplementaire ",
+        'label'     => 'suplements',
         'type'      => 'select2_multiple',
         'name'      => 'suplement', // the method that defines the relationship in your Model
         'entity'    => 'suplement', // the method that defines the relationship in your Model
@@ -164,8 +152,77 @@ class CommandeCrudController extends CrudController
     ]);
     }
 
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+
+     
+        $this->crud->addColumn([
+            'name' => 'type',
+            'label' => 'type',
+            'type' => 'text'
+          
+        ]);
+        
+        $this->crud->addColumn([
+          
+            'name' => 'realise',
+            'label' => 'realise',
+            'type' => 'number'
+          
+           
+        ]);
+        $this->crud->addColumn([
+           
+          
+            'name' => 'secteur',
+            'label' => 'secteur',
+            'type' => 'text'
+          
+        ]);
+       $this->crud->addColumn([
+             // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => 'Product',
+            'name' => "produit",
+            'type' => "model_function",
+            'function_name' => 'product', // the method in your Model
+            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+            //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+               
+          
+
+        ]);
+        $this->crud->addColumn([
+            // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "formules",
+            'name' => "formule",
+            'type' => "model_function",
+            'function_name' => 'form', // the method in your Model
+            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+            //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+               
+              
+           
+        ]);
+        $this->crud->addColumn([
+           
+              // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "suplementaires",
+            'name' => "suplement",
+            'type' => "model_function",
+            'function_name' => 'suplementaire', // the method in your Model
+            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+            //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+               
+            ]);
+
+      
+    }
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
     }
+
 }

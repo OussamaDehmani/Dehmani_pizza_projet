@@ -7,6 +7,9 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--meta data for csrf laravel -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Boit | Pizza</title>
 
     <!-- Google Font -->
@@ -21,8 +24,13 @@
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css">
-    <!--papal script -->
+   
+   
+    <!--stripe script -->
+
     <script src="https://js.stripe.com/v3/"></script>
+
+
 </head>
 
 <body>
@@ -37,13 +45,7 @@
         <div class="humberger__menu__logo">
             <a href="#"><img src="{{asset('img/logo.png')}}" alt=""></a>
         </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
+       
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
                 <img src="{{asset('img/language.png')}}" alt="">
@@ -146,13 +148,7 @@
                     </nav>
                 </div>
                 <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span></span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
-                        </ul>
-                       <!-- <div class="header__cart__price">item: <span>$150.00</span></div>-->
-                    </div>
+                    
                 </div>
             </div>
             <div class="humberger__open">
@@ -163,74 +159,38 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>  
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+ 
+    
     <!-- Hero Section End -->
 
     
     <div class="row col-md-12">
             
             <div class="col-md-3">
-            <h3>Page Payment</h3>
+               
             </div>
             <div class="col-md-6 border border-secondary">
-            <form id="payment-form" class="my-4">
-            <div id="card-element">
-                <!-- Elements will create input elements here -->
-            </div>
-
-            <!-- We'll put the error messages in this element -->
-            <div id="card-errors" role="alert"></div>
-
-            <button class='btn btn-success mt-4 ' id="submit">Pay</button>
+                <form action="{{route('payment.store')}}"  method="POST" id="payment-form" class="my-4">
+                    @csrf
+                    <div id="card-element">
+                      <!-- Elements will create input elements here -->
+                    </div>
+                    <!-- We'll put the error messages in this element -->
+                    <div id="card-errors" role="alert"></div>
+                    <hr>
+                    <h3 class="mb-2">secteur :</h3>
+                    <div class="form-group form-check">
+                        <input type="text" name="secteur" class="form-control" id="secteur" >  
+                    </div>    
+                    <hr>
+                    <h3 class="mb-2">Adresse de livraison :</h3>
+                    <div class="form-group form-check">
+                        <input type="text" name="adress" class="form-control" id="adress" >  
+                    </div>    
+                    <hr>           
+                    <button class='btn btn-success col-lg-12' id="submit">Pay</button>
+                    </form>
+                </div>
             </form>
             </div>
             <div class="col-md-3">
@@ -248,8 +208,14 @@
     <script src="{{asset('js/main.js')}}"></script>
 
     <script>
+
+    // Set your publishable key: remember to change this to your live publishable key in production
+    // See your keys here: https://dashboard.stripe.com/account/apikeys
     var stripe = Stripe('pk_test_ir4zxzuthQOiUDOBZBuxH64j00oOr4oZVi');
     var elements = stripe.elements();
+
+
+
     var style = {
                 base: {
                 color: "#32325d",
@@ -295,12 +261,38 @@
         } else {
         // The payment has been processed!
         if (result.paymentIntent.status === 'succeeded') {
-            // Show a success message to your customer
-            // There's a risk of the customer closing the window before callback
-            // execution. Set up a webhook or plugin to listen for the
-            // payment_intent.succeeded event that handles any business critical
-            // post-payment actions.
-            console.log(result.paymentIntent);
+            var paymentIntent=result.paymentIntent;
+            var form = document.getElementById('payment-form');
+            var url= form.action;
+            var secteur=document.getElementById('secteur').value;
+            var adress=document.getElementById('adress').value;
+
+             redirect="/remerciement";
+           
+            var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            fetch(
+                url,
+                {
+                    headers:{
+                        "Content-type":"application/json",
+                        "Accept":"application/json, text-plain,*/*",
+                        "X-Requested-With":"XMLHttpRequest",
+                        "X-CSRF-TOKEN":token
+                    },
+                    method:"POST",
+                    body:JSON.stringify({
+                    paymentIntent:paymentIntent,
+                    secteur:secteur,
+                    adress:adress,
+
+                })
+                }
+                ).then((data)=>{
+                    console.log(data) 
+                    window.location.href= ""; 
+                }).catch((error)=>{
+                    console.log(error)
+                })
         }
         }
     });

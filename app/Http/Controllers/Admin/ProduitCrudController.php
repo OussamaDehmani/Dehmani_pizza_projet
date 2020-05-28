@@ -56,16 +56,14 @@ class ProduitCrudController extends CrudController
             'model' => "App\Models\Categorie",
           ],
           [    // Select2Multiple = n-n relationship (with pivot table)
-            'label'     => "Element de Base ",
-            'type'      => 'select2_multiple',
-            'name'      => 'element', // the method that defines the relationship in your Model
-            'entity'    => 'element', // the method that defines the relationship in your Model
-            'attribute' => 'nomelem', // foreign key attribute that is shown to user
-            'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-            'model'     => "App\Models\Element", // foreign key model
-            'options'   => (function ($query) {
-                return $query->orderBy('nomelem', 'ASC')->get(); }), 
+            'label'     => "element de base",
+            'name' => "url",
+            'type' => "model_function",
+            'function_name' => 'getSlugWithLink', // the method in your Model
+            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+            // 
           ],
+          
          [
             'name' => 'prix',
             'label' => 'Prix  ',

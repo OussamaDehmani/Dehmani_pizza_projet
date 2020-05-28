@@ -17,7 +17,7 @@ class indexpage extends Controller
     function lister(){
         $produit= Produit::All();
         $categorie= Categorie::All();
-        $formule= Formule::All();
+        $formule= Formule::with('produit')->get();
         $produit_categorie=DB::table('categories')
         ->join('produits','produits.category_id','=','categories.id',)
         ->select('produits.*','categories.name' )

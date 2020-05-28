@@ -61,10 +61,6 @@ class DetailController extends Controller
         ->where('produits.category_id',$prod->category_id)
         ->select('produits.*')->get();
 
-       // $related=Produit::where('category_id',$prod->category_id);
-      // dd($categorie);
-     
-
         return view('shop-details',['categorie'=>$categorie])->with('produit',$produit)->with('id',$id);
     }
 

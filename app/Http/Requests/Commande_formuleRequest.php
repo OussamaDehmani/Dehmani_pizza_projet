@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormuleRequest extends FormRequest
+class Commande_formuleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,6 @@ class FormuleRequest extends FormRequest
     {
         return [
             // 'name' => 'required|min:5|max:255'
-           
-           'img' => 'required',
         ];
     }
 
@@ -53,8 +51,6 @@ class FormuleRequest extends FormRequest
     {
         return [
             //
-           // 'nomFormule.unique' => 'Nom formule déjà utilisé',
-            'img.required' => 'obligatoire',
         ];
     }
 }

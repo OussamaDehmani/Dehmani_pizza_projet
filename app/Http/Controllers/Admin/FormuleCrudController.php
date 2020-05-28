@@ -44,6 +44,18 @@ class FormuleCrudController extends CrudController
                 'label' => 'nomFormule ',
                 'type' => 'text'
             ],
+            [    // Select2Multiple = n-n relationship (with pivot table)
+                'label'     => "les produits ",
+                'type'      => 'select2_multiple',
+                'name'      => 'produit', // the method that defines the relationship in your Model
+                'entity'    => 'produit', // the method that defines the relationship in your Model
+                'attribute' => 'nom', // foreign key attribute that is shown to user
+           
+                'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+                // 'select_all' => true, // show Select All and Clear buttons?
+           
+               // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+            ],
             [
                 'name' => 'description',
                 'label' => 'description ',
@@ -77,6 +89,19 @@ class FormuleCrudController extends CrudController
             'label'=> 'Nom Formule ',
             'type' => 'text'
           ]);
+        $this->crud->addField( [    // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "les produits ",
+            'type'      => 'select2_multiple',
+            'name'      => 'produit', // the method that defines the relationship in your Model
+            'entity'    => 'produit', // the method that defines the relationship in your Model
+            'attribute' => 'nom', // foreign key attribute that is shown to user
+       
+            'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
+            // 'select_all' => true, // show Select All and Clear buttons?
+       
+   
+             
+        ]);
           $this->crud->addField([
             'name' => 'description',
             'label' => 'Description ',
