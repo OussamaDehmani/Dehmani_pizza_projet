@@ -115,7 +115,8 @@
                             <div class="media">
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="#">{{$formule->model->nomFormule}}</a></h4>
-                                    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                    <br>
+                                   <!-- <h5 class="media-heading"> by <a href="#">Brand name</a></h5>-->
                                     <span>type: </span><span class="text-success"><strong>{{$formule->options['type']}}</strong></span>
                                 </div>
                             </div></td>
@@ -149,7 +150,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="#">{{$product->model->nom}}</a></h4>
-                                    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                   <!-- <h5 class="media-heading"> by <a href="#">Brand name</a></h5>--><br>
                                     <span>type: </span><span class="text-success"><strong>{{$product->options['type']}}</strong></span>
                                 </div>
                             </div></td>
@@ -176,14 +177,14 @@
                         <tr>
                         <td class="col-sm-8 col-md-6">
                             <div class="media">
-                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="{{$product->model->imge}}" style="width: 100px; height: 100px;"> </a>
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="{{asset('img/sauce.png')}}" style="width: 100px; height: 100px;"> </a>
                                 
                             </div></td>
                             <td class="col-sm-4 col-md-3">
                             <div class="media">
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href="#">{{$product->model->nomingred}}</a></h4>
-                                    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                   <!-- <h5 class="media-heading"> by <a href="#">Brand name</a></h5>--><br>
                                     <span>type: </span><span class="text-success"><strong>{{$product->options['type']}}</strong></span>
                                 </div>
                             </div></td>

@@ -45,15 +45,10 @@ class FormuleCrudController extends CrudController
                 'type' => 'text'
             ],
             [    // Select2Multiple = n-n relationship (with pivot table)
-                'label'     => "les produits ",
-                'type'      => 'select2_multiple',
-                'name'      => 'produit', // the method that defines the relationship in your Model
-                'entity'    => 'produit', // the method that defines the relationship in your Model
-                'attribute' => 'nom', // foreign key attribute that is shown to user
-           
-                'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
-                // 'select_all' => true, // show Select All and Clear buttons?
-           
+                'label'     => "composants",
+            'name' => "suplement",
+            'type' => "model_function",
+            'function_name' => 'product',
                // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
             ],
             [
@@ -113,6 +108,57 @@ class FormuleCrudController extends CrudController
             'type' => 'number'
           ]);
     }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+
+        $this->crud->addColumn([
+            'name' => "img",
+            'label' => "image",
+            'type' => 'image',
+            'upload' => true,
+            'crop' => true, // set to true to allow cropping, false to disable
+            'aspect_ratio' => 1,
+            'height' => '80px',
+            'width' => '80px'
+        
+            ]);
+        
+        $this->crud->addColumn([
+            'name' => 'nomFormule',
+            'label'=> 'Nom Formule ',
+            'type' => 'text'
+        
+            ]);
+       
+        $this->crud->addColumn([
+           
+            'name' => 'description',
+            'label' => 'Description ',
+            'type' => 'text'
+            ]);
+        $this->crud->addColumn([
+           
+            'name' => 'prix',
+            'label' => 'Prix ',
+            'type' => 'number'
+            ]);
+        $this->crud->addColumn([
+           
+              // Select2Multiple = n-n relationship (with pivot table)
+            'label'     => "composants",
+            'name' => "suplement",
+            'type' => "model_function",
+            'function_name' => 'product', // the method in your Model
+            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+            //  // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+               
+            ]);
+
+      
+    }
+
 
     protected function setupUpdateOperation()
     {

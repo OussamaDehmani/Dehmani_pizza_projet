@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Produit extends Model
 {
     use CrudTrait;
@@ -31,12 +32,12 @@ class Produit extends Model
     
     public function getSlugWithLink() {
          $tab=[];
-         $ax= Produit::with('produit')->get();
-         foreach($ax as $a){
-             foreach($a->element as $b){
+         $ax= Produit::with('element')->get();
+        // foreach($ax as $a){
+             foreach($this->Element as $b){
             array_push($tab,$b->nomelem);
             }  
-        }
+       // }
          $x=implode(",", $tab);
         return $x;
     }

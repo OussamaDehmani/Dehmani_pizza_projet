@@ -28,6 +28,17 @@ class Formule extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function product() {
+        $tab=[];
+        $ax= Commande::with('produit')->get();
+        //foreach($ax as $a){
+            foreach($this->produit as $b){
+           array_push($tab,$b->nom);
+         //  }  
+       }
+        $x=implode(",", $tab);
+       return $x;
+   }
     public function setImageAttribute($value)
     {
         $attribute_name = "img";

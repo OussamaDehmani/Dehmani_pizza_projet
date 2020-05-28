@@ -84,7 +84,8 @@ class ProduitCrudController extends CrudController
             'label' => 'Date fin  ',
             'type' => 'datetime'
           ]
-        ]);
+        ]
+      );
     }
 
     protected function setupCreateOperation()
@@ -152,6 +153,79 @@ class ProduitCrudController extends CrudController
           ]);
 
     }
+
+
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+ 
+        $this->crud->addColumn([
+          'name' => "imge",
+          'label' => "image",
+          'type' => 'image',
+          'upload' => true,
+          'crop' => true, // set to true to allow cropping, false to disable
+          'aspect_ratio' => 1,
+          'height' => '80px',
+          'width' => '80px'
+        ]);
+        $this->crud->addColumn([
+          'label' => "Category",
+          'type' => 'select',
+          'name' => 'category_id', // the db column for the foreign key
+          'entity' => 'category', // the method that defines the relationship in your Model
+          'attribute' => 'name', // foreign key attribute that is shown to user
+          'model' => "App\Models\Categorie",
+        ]);
+     
+        $this->crud->addColumn([
+          'name' => 'nom',
+          'label' => 'Nom produit ',
+          'type' => 'text'
+        ]);
+     
+    
+     
+        $this->crud->addColumn([
+          'name' => 'remise',
+          'label' => 'Remise  ',
+          'type' => 'number'
+        ]);
+     
+        $this->crud->addColumn([
+          'name' => 'prix',
+          'label' => 'Prix  ',
+          'type' => 'number'
+        ]);
+     
+        $this->crud->addColumn([
+          'label'     => "element de base",
+          'name' => "url",
+          'type' => "model_function",
+          'function_name' => 'getSlugWithLink', // the method in your Model
+          // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
+          // 
+        ]);
+     
+      
+        $this->crud->addColumn([
+          'name' => 'date_fin',
+          'label' => 'Date fin  ',
+          'type' => 'datetime'
+        ]);
+     
+        $this->crud->addColumn([
+          'name' => 'date_debut',
+          'label' => 'Date debut  ',
+          'type' => 'date'
+        ]);
+    
+      
+
+      
+    }
+
+
 
     protected function setupUpdateOperation()
     {

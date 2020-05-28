@@ -221,15 +221,23 @@
     
     <div class="row col-md-12">
             
-            <div class="col-md-4">
+            <div class="col-md-3">
             
             </div>
-            <div class="col-md-4 ">
-            <h1>thank you !</h1>
-            </div>
-            <div class="col-md-4">
+                    <div class=" row col-md-6">
+                        
+                            <h4 class='align-center alert alert-success'>votre commande est enregistrée avec succes. <a href="/"><i class="fa fa-home"></i>acceuil</a>  </h4>
+
+                    </div>
+               
+            
+            <div class="col-md-2">
+            
+             
+                        
             </div>
     </div>
+   
 
     <!-- Js Plugins -->
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>

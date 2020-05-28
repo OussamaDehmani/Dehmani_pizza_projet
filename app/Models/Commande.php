@@ -31,10 +31,10 @@ class Commande extends Model
     public function product() {
         $tab=[];
         $ax= Commande::with('produit')->get();
-        foreach($ax as $a){
-            foreach($a->produit as $b){
+       // foreach($ax as $a){
+            foreach($this->produit as $b){
            array_push($tab,$b->nom);
-           }  
+        //   }  
        }
         $x=implode(",", $tab);
        return $x;
@@ -42,10 +42,10 @@ class Commande extends Model
     public function suplementaire() {
         $tab=[];
         $ax= Commande::with('suplement')->get();
-        foreach($ax as $a){
-            foreach($a->suplement as $b){
+       // foreach($ax as $a){
+            foreach($this->suplement as $b){
            array_push($tab,$b->nomingred);
-           }  
+        //   }  
        }
         $x=implode(",", $tab);
        return $x;
@@ -53,10 +53,10 @@ class Commande extends Model
     public function form() {
         $tab=[];
         $ax= Commande::with('formule')->get();
-        foreach($ax as $a){
-            foreach($a->formule as $b){
+        //foreach($ax as $a){
+            foreach($this->formule as $b){
            array_push($tab,$b->nomFormule);
-           }  
+         //  }  
        }
         $x=implode(",", $tab);
        return $x;
